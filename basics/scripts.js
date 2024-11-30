@@ -1,7 +1,10 @@
-function Player(nickname){
-    this.nickname = nickname;
-    this.playedMatch = 0;
+class Player {
+    constructor(nickname) {
+        this.nickname = nickname;
+        this.playedMatch = 0;
+    }
 };
+
 
 Player.prototype.play = function(){
     this.playedMatch++;
@@ -37,3 +40,6 @@ function printTierLevel(Player){
 const player = new Player(`Dzsudzsi`);
 player.play();
 printTierLevel(player);
+
+
+
