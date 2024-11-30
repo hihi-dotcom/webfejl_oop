@@ -25,14 +25,15 @@ Player.prototype.getTierLevel = function(){
 
 /**
  * 
- * @param {string} playerName 
- * @param {string} tierLevel 
+ * @param {Object} Player 
  */
 
-function printTierLevel(playerName, tierLevel){
- console.log(playerName + ` is in the ` + tierLevel + ` tier.`);
+
+function printTierLevel(Player){
+
+ console.log(Player.nickname + ` is in the ` + Player.getTierLevel() + ` tier.`);
 };
 
 const player = new Player(`Dzsudzsi`);
 player.play();
-printTierLevel(`Dzsudzsák Balázs`, `99`);
+printTierLevel(player);
