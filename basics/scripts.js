@@ -12,7 +12,6 @@ Player.prototype.play = function(){
 };
 
 
-
 Player.prototype.getTierLevel = function(){
 
     if(this.playedMatch <= 3){
@@ -42,20 +41,27 @@ player.play();
 printTierLevel(player);
 
 
-function Person() {
-    this.name = `Géza`;
-};
-
-
-function getName(Person){
-    console.log(Person.name);
-};
-
-function Student(school) {
-    this.name = `Géza`;
+function Person(name, school) {
+    this.name = name;
     this.school = school;
-};
-Object.setPrototypeOf(Person, Student);
 
-const student = new Student(`Bolyai`);
-getName(student);
+};
+
+
+
+function Student(name,school) {
+  
+    Person.call(this, name, school)
+};
+
+function getName(Student
+){
+    console.log(Student.name + Student.school);
+};
+
+
+const ember = new Person(`Géza `, `BME`);
+
+getName(ember);
+Object.setPrototypeOf(Student.prototype, Person.prototype);
+
