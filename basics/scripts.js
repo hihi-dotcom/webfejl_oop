@@ -29,8 +29,6 @@ Player.prototype.getTierLevel = function(){
  * 
  * @param {Object} Player 
  */
-
-
 function printTierLevel(Player){
 
  console.log(Player.nickname + ` is in the ` + Player.getTierLevel() + ` tier.`);
@@ -41,27 +39,19 @@ player.play();
 printTierLevel(player);
 
 
-function Person(name, school) {
+function Person(name) {
     this.name = name;
-    this.school = school;
-
 };
 
-
-
+Person.prototype.getName = function(){
+    console.log(this.name);
+}
+const ember = new Person("Géza");
 function Student(name,school) {
-  
-    Person.call(this, name, school)
+   Person.call(this, name);
+    this.school = school;   
 };
-
-function getName(Student
-){
-    console.log(Student.name + Student.school);
-};
-
-
-const ember = new Person(`Géza `, `BME`);
-
-getName(ember);
 Object.setPrototypeOf(Student.prototype, Person.prototype);
-
+const tanulo = new Student("Géza","Bolyai");
+console.log(tanulo.name, tanulo.school);
+ember.getName();
