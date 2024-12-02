@@ -1,4 +1,4 @@
-class Player {
+/*class Player {
     constructor(nickname) {
         this.nickname = nickname;
         this.playedMatch = 0;
@@ -24,11 +24,12 @@ Player.prototype.getTierLevel = function(){
         return `C`;
     }
 };
-
+*/
 /**
  * 
  * @param {Object} Player 
  */
+/*
 function printTierLevel(Player){
 
  console.log(Player.nickname + ` is in the ` + Player.getTierLevel() + ` tier.`);
@@ -38,15 +39,10 @@ const player = new Player(`Dzsudzsi`);
 player.play();
 printTierLevel(player);
 
-
+*/
 function Person(name) {
     this.name = name;
 };
-
-Person.prototype.getName = function(){
-    console.log(this.name);
-}
-const ember = new Person("Géza");
 function Student(name,school) {
    Person.call(this, name);
     this.school = school;   
@@ -54,4 +50,3 @@ function Student(name,school) {
 Object.setPrototypeOf(Student.prototype, Person.prototype);
 const tanulo = new Student("Géza","Bolyai");
 console.log(tanulo.name, tanulo.school);
-ember.getName();
