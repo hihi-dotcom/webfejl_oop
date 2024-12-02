@@ -40,8 +40,11 @@ player.play();
 printTierLevel(player);
 
 */
+/*
 function Person(name) {
     this.name = name;
+
+
 };
 function Student(name,school) {
    Person.call(this, name);
@@ -50,3 +53,20 @@ function Student(name,school) {
 Object.setPrototypeOf(Student.prototype, Person.prototype);
 const tanulo = new Student("Géza","Bolyai");
 console.log(tanulo.name, tanulo.school);
+*/
+
+class Person{
+    constructor(name){
+        this.name = name;
+    }
+}
+
+class Student extends Person{
+    constructor(name, school){
+        super(name);
+        this.school = school;
+    }
+}
+
+const classmate = new Student(`Géza`, `Bolyai`);
+console.log(classmate.name, classmate.school);
