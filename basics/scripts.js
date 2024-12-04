@@ -54,7 +54,7 @@ Object.setPrototypeOf(Student.prototype, Person.prototype);
 const tanulo = new Student("Géza","Bolyai");
 console.log(tanulo.name, tanulo.school);
 */
-
+/*
 class Person{
     constructor(name){
         this.name = name;
@@ -70,3 +70,45 @@ class Student extends Person{
 
 const classmate = new Student(`Géza`, `Bolyai`);
 console.log(classmate.name, classmate.school);
+*/
+
+class Animal{
+    constructor(name, voice){
+        this.name = name;
+        this.voice = voice;
+    };
+
+    hang(){
+        console.log(`A/Az ` + this.name +` ilyen hangot ad ki: ` + this.voice);
+    };
+};
+
+class Bird extends Animal{
+    constructor(name, voice){
+        super(name, voice);
+    };
+
+    fly(){
+        console.log(`A/Az ` + this.name + ` éppen repül.`);
+    };
+};
+
+class Mammal extends Animal{
+    constructor(name, voice){
+        super(name, voice);
+    };
+
+    walk(){
+        console.log(`A/Az ` + this.name + ` épp sétál.`);
+    };
+}
+
+const allat = new Bird(`Búbos Banka`, 'csiripel');
+ 
+const emlos = new Mammal(`Elefánt`, `orrhangokat`);
+
+
+allat.fly();
+allat.hang();
+emlos.walk();
+emlos.hang();
