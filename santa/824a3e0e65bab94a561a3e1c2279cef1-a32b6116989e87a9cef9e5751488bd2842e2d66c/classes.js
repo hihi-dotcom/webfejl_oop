@@ -7,6 +7,7 @@ class Factory{
 addCompanion(companion){// deklarálom az addCompanion függvényt, ami egy companiont vár bemeneti paraméterként
     this.companions.push(companion); //és ezt a companiont felpusholjuk a fentebb létrehozott tömbbe.
     createRow(mano);
+    const mano1 = new Companion(Factory.generalId(), )
 }
 generalId(){
     return this.companions.length; // az új elem idje mindig a tömb hossza lesz.

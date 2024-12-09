@@ -75,13 +75,17 @@ function refreshProductList(companion){ //TODO
  * 
  * @param {HTMLFormElement} form 
  */
-function addCompanion(form){ //TODO 
+function addCompanion(form,Factory){ //TODO 
+   
     const firstName =form.querySelector('#cfirstname')
     const lastname =form.querySelector('#clastname')
     const area = form.querySelector('#carea')
+    const product = form.querySelector('#productname')
     const firstNameValue = firstName.value;
     const lastNameValue = lastname.value;
     const areaValue = area.value;
+    const productValue = product.value;
+    const mano1 = new Companion(Factory.generalId(),firstNameValue,lastNameValue, areaValue, productValue)
     // TODO 6
 }
 
