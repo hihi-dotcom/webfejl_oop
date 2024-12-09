@@ -97,6 +97,7 @@ class Mammal extends Animal{
     constructor(name, voice){
         super(name, voice);
     };
+  
 
     walk(){
         console.log(`A/Az ` + this.name + ` épp sétál.`);
