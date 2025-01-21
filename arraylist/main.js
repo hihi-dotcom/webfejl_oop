@@ -13,15 +13,20 @@ class ArrayList{
 
     Add(element){
         const lengths = this.#length_of_elements;
+        this.#status[lengths] = element; 
 
-        this.#status[lengths] = element;
-
-
-
+        this.#length_of_elements++;
+    };
     Clear(){
         this.#status = {};
         this.#length_of_elements = 0;
-
-    }
-}
+    };
 };
+
+const tomblista = new ArrayList();
+
+const elsoobj = {name: "Paradicsom"};
+
+tomblista.Add(elsoobj);
+
+console.log(tomblista);
