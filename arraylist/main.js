@@ -26,7 +26,8 @@ class ArrayList{
 const tomblista = new ArrayList();
 
 const elsoobj = {name: "Paradicsom"};
-
+const masodikobj = {sorszam: 2};
 tomblista.Add(elsoobj);
-
+tomblista.Add(masodikobj);
 console.log(tomblista);
+console.log(tomblista[2]);
