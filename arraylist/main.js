@@ -18,10 +18,10 @@ class ArrayList{
 
         Object.defineProperty(this, lengths, {
             get: function(){
-                return this.#status[index];
+                return this.#status[lengths];
             }, 
             set: function(ertek){
-                this.#status[index] = ertek;
+                this.#status[lengths] = ertek;
             },
             enumerable: true,
         })
@@ -32,7 +32,7 @@ class ArrayList{
     Clear(){
         this.#status = {};
         this.#length_of_elements = 0;
-       /* for(const kulcs in this){
+        /*for(const kulcs in this){
             delete this[kulcs];
         }*/
     }
@@ -41,10 +41,13 @@ class ArrayList{
 const tomblista = new ArrayList();
 
 const elem1 = {name: `Paradicsom`};
-const elem2 = {name: `Uborka`};
+
 
 tomblista.Add(elem1);
+
+const elem2 = {name: `Uborka`};
 tomblista.Add(elem2);
 
 tomblista.Clear();
 
+console.log(tomblista);
