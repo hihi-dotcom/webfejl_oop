@@ -68,3 +68,44 @@ tomblista.Clear();
 
 
 console.log(tomblista);
+
+
+class ArrayHTMLElement extends HTMLElement{
+    #tbody
+    constructor(){
+        super();
+    }
+    connectedCallback(){
+        const tablazat = document.createElement('table');
+        this.appendChild(tablazat);
+
+        const tablazatfej = document.createElement('thead');
+        tablazat.appendChild(tablazatfej);
+
+       this.#tbody = document.createElement('tbody');
+        tablazat.appendChild(this.#tbody);
+    }
+    /**
+     * 
+     * @param {{nev: String, eletkor:Number}} param1 
+     */
+    AddPersonRow(param1){
+        const tablazatsor = document.createElement('tr');
+        this.#tbody.appendChild(tablazatsor);
+
+        const nev1 = document.createElement('td');
+        nev1.innerHTML = param1.nev;
+        tablazatsor.appendChild(nev1);
+
+        const eletkor1 = document.createElement('td');
+        eletkor1.innerHTML = param1.eletkor;
+        tablazatsor.appendChild(eletkor1);
+
+
+    }
+};
+customElements.define("array-table", ArrayHTMLElement);
+
+const tombhtml = new ArrayHTMLElement();
+document.body.appendChild(tombhtml);
+tombhtml.AddPersonRow({nev: "Szikora Bálint", eletkor: 18});
