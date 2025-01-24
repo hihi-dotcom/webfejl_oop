@@ -15,10 +15,10 @@ class ArrayList{
         const lengths = this.#length_of_elements;
         this.#status[lengths] = element; 
         Object.defineProperty(this, lengths,  {
-            get: function(){
+            get:() => {
                 return this.#status[lengths];
             },
-            set: function(uj_ertek){
+            set:(uj_ertek) => {
                 this.#status[lengths] = uj_ertek;
             },
             
@@ -65,4 +65,6 @@ console.log(tomblista.Contains(elsoobj));
 console.log(tomblista.Contains(masodikobj));
 
 tomblista.Clear();
+
+
 console.log(tomblista);
