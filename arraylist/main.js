@@ -1,12 +1,13 @@
 class ArrayList{
     #length_of_elements;
     #status;
+    #tombtabla;
     
-    constructor(){
+    constructor(bemenet){
         this.#status = {};
         this.#length_of_elements = 0;
+       this.#tombtabla = bemenet;
     }
-
     get Count(){
         return this.#length_of_elements;
     }
@@ -26,6 +27,10 @@ class ArrayList{
             configurable: true
         });
         this.#length_of_elements++;
+
+        if( this.#tombtabla !== undefined){
+            this.#tombtabla.AddPersonRow(element);
+        }
     };
     Clear(){
         this.#status = {};
@@ -109,3 +114,16 @@ customElements.define("array-table", ArrayHTMLElement);
 const tombhtml = new ArrayHTMLElement();
 document.body.appendChild(tombhtml);
 tombhtml.AddPersonRow({nev: "Szikora Bálint", eletkor: 18});
+
+
+const ujtomblista = new ArrayList(tombhtml);//Ismét példányosítottam az ArrayList osztályomat, most ugyanakkor megadtam paraméterként a korábban léterhozott tombhtml példányt paraméterként
+ujtomblista.Add({nev: `Czirják Ádám`, eletkor: 17});//Meghívtam az új ArrayList példányom Add függvényét, aminek megadtam paraméterül azt az objektumot, aminek van nev és eletkor tulajdonsága kitöltve
+
+const nyomkodo_gomb = document.createElement(`button`); //létrehoztam egy gombot (HTMlElement)
+document.body.appendChild(nyomkodo_gomb);//Hozzáfűztem a HTML fájlomhoz
+nyomkodo_gomb.innerHTML = `Hozzáadás`;//A gomb innerHTMLjének megadtam a stringet
+
+nyomkodo_gomb.addEventListener('click', (e) => {//definiálok egy eseménykezelőt a gombhoz, amely a click eseményre hallgat
+    
+    ujtomblista.Add({nev: `Lajos`, eletkor: 28});//Megint meghívom a második példányára az ArrayListnek az Add függvényt, amelynek megadok ismét egy objektumot paraméterként
+})
