@@ -1,0 +1,115 @@
+/**
+ * @typedef {{nev: String, eletkor: Number}} Person
+ * @callback UpdateCallback
+ * @param {Person[]} persons 
+ * @returns {void}
+ */
+
+class Data_Manager{
+    /**
+     * @type {Person[]}
+     */
+    #array 
+
+    /**
+     * @type {UpdateCallback}
+     */
+    #updateCallback
+
+    /**
+     * 
+     * @param {Person[]} param1 
+     */
+    constructor(param1 = []){
+        this.#array = [];
+        this.#updateCallback = () => {
+
+        };
+       
+    };
+    /**
+     * 
+     * @param {UpdateCallback} parameter 
+     */
+    setUpdateCallback(parameter){
+        this.#updateCallback = parameter;
+        this.#updateCallback(this.#array);
+    }
+
+    /**
+     * 
+     * @param {Person} Person 
+     */
+    add(Person){
+        this.#array.push(Person);
+
+        this.#updateCallback(this.#array);
+    }
+
+/**
+ * 
+ * @param {Number} bemeneti_eletkor 
+ */
+    filterAge(bemeneti_eletkor){
+        const result_ages = [];
+        for(let i = 0; i < this.#array.length, i++;){
+            if(this.#array[i].eletkor === bemeneti_eletkor){
+                result_ages.push(bemeneti_eletkor);
+            }
+        }
+        this.#updateCallback(result_ages);
+    }
+
+    /**
+     * 
+     * @param {String} bemeneti_nev 
+    */
+        filterName(bemeneti_nev){
+            const result_names = [];
+            for(let i = 0; i < this.#array.length, i++;){
+                if(this.#array[i].nev.includes(bemeneti_nev)){
+                    result_names.push(bemeneti_nev);
+            }
+            this.#updateCallback(result_names);
+        }
+        
+}
+}
+
+class Data_Table{
+
+    /**
+     * 
+     * @param {Data_Manager} datamanager 
+     */
+    constructor(datamanager){
+        const table = document.createElement(`table`);
+        document.body.appendChild(table);
+
+        const tbody = document.createElement(`tbody`);
+        table.appendChild(tbody);
+
+        datamanager.setUpdateCallback((emberek) => {
+            tbody.innerHTML = ``;
+            for(const ember of emberek){
+                const row = document.createElement(`tr`);
+                tbody.appendChild(row);
+
+                const cella1 = document.createElement(`td`);
+                row.appendChild(cella1);
+                cella1.innerHTML = ember.nev;
+
+                const cella2 = document.createElement(`td`);
+                row.appendChild(cella2);
+                cella2.innerHTML = ember.eletkor;
+
+            }
+        });
+    }
+};
+
+const adat_manager = new Data_Manager([{nev: `Feri`, eletkor: 17},
+    {nev: `Géza`, eletkor: 17},
+    {nev: `Józsi`, eletkor: 16}]);
+
+const adat_table = new Data_Table(adat_manager);
