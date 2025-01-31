@@ -21,7 +21,7 @@ class Data_Manager{
      * @param {Person[]} param1 
      */
     constructor(param1 = []){
-        this.#array = [];
+        this.#array = param1;
         this.#updateCallback = () => {
 
         };
@@ -113,3 +113,7 @@ const adat_manager = new Data_Manager([{nev: `Feri`, eletkor: 17},
     {nev: `Józsi`, eletkor: 16}]);
 
 const adat_table = new Data_Table(adat_manager);
+
+
+const input_1 = document.createElement(`input`);
+document.body.appendChild(input_1);
