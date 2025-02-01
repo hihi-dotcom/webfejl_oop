@@ -132,12 +132,24 @@ const adat_manager = new Data_Manager([{nev: `Feri`, eletkor: 17},
 
 const adat_table = new Data_Table(adat_manager);
 
+//+
+const nev_label = document.createElement(`label`);
+nev_label.innerText = `Név: `;
+document.body.appendChild(nev_label);
+
+
 //11. pont
 const input_1 = document.createElement(`input`);
 document.body.appendChild(input_1);
+const breaking_html = document.createElement(`br`);
+document.body.appendChild(breaking_html);
 
+const kor_label = document.createElement(`label`);
+kor_label.innerText = `Kor: `;
+document.body.appendChild(kor_label);
 const input_2 = document.createElement(`input`);
 document.body.appendChild(input_2);
+
 
 
 input_1.addEventListener(`input`, (e) =>{
