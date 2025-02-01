@@ -67,19 +67,24 @@ class Data_Manager{
     */
         filterName(bemeneti_nev){
             const result_names = [];
-
-            for(let i = 0; i < this.#array.length; i++){
-                if(this.#array[i].nev.includes(bemeneti_nev)){
-                    result_names.push(this.#array[i]);
-            }
+                for(let i = 0; i < this.#array.length; i++){
+                    if(this.#array[i].nev.includes(bemeneti_nev)){
+                        result_names.push(this.#array[i]);
+                    }
+           
+                }
+        
             this.#updateCallback(result_names);
         }
-        
-}
+
+
 }
 
 class Data_Table{
-
+    /**
+     * @type {HTMLTableSectionElement}
+     */
+    #tbody;
     /**
      * 
      * @param {Data_Manager} datamanager 
@@ -90,23 +95,33 @@ class Data_Table{
 
         const tbody = document.createElement(`tbody`);
         table.appendChild(tbody);
+        this.#tbody = tbody;
 
         datamanager.setUpdateCallback((emberek) => {
-            tbody.innerHTML = ``;
-            for(const ember of emberek){
-                const row = document.createElement(`tr`);
-                tbody.appendChild(row);
-
-                const cella1 = document.createElement(`td`);
-                row.appendChild(cella1);
-                cella1.innerHTML = ember.nev;
-
-                const cella2 = document.createElement(`td`);
-                row.appendChild(cella2);
-                cella2.innerHTML = ember.eletkor;
-
-            }
+            this.#renderTable(emberek);
         });
+    }
+
+    /**
+     * 
+     * @param {Person} emberes_tomb 
+     */
+
+    #renderTable(emberes_tomb){
+        this.#tbody.innerHTML = ``;
+        for(const ember of emberes_tomb){
+            const row = document.createElement(`tr`);
+            this.#tbody.appendChild(row);
+
+            const cella1 = document.createElement(`td`);
+            row.appendChild(cella1);
+            cella1.innerHTML = ember.nev;
+
+            const cella2 = document.createElement(`td`);
+            row.appendChild(cella2);
+            cella2.innerHTML = ember.eletkor;
+
+        }
     }
 };
 
