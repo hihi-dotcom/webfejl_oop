@@ -52,9 +52,10 @@ class Data_Manager{
  */
     filterAge(bemeneti_eletkor){
         const result_ages = [];
-        for(let i = 0; i < this.#array.length, i++;){
+
+        for(let i = 0; i < this.#array.length; i++){
             if(this.#array[i].eletkor === bemeneti_eletkor){
-                result_ages.push(bemeneti_eletkor);
+                result_ages.push(this.#array[i]);
             }
         }
         this.#updateCallback(result_ages);
@@ -66,9 +67,10 @@ class Data_Manager{
     */
         filterName(bemeneti_nev){
             const result_names = [];
-            for(let i = 0; i < this.#array.length, i++;){
+
+            for(let i = 0; i < this.#array.length; i++){
                 if(this.#array[i].nev.includes(bemeneti_nev)){
-                    result_names.push(bemeneti_nev);
+                    result_names.push(this.#array[i]);
             }
             this.#updateCallback(result_names);
         }
@@ -112,8 +114,25 @@ const adat_manager = new Data_Manager([{nev: `Feri`, eletkor: 17},
     {nev: `Géza`, eletkor: 17},
     {nev: `Józsi`, eletkor: 16}]);
 
+
 const adat_table = new Data_Table(adat_manager);
 
-
+//11. pont
 const input_1 = document.createElement(`input`);
 document.body.appendChild(input_1);
+
+const input_2 = document.createElement(`input`);
+document.body.appendChild(input_2);
+
+
+input_1.addEventListener(`input`, (e) =>{
+ 
+    adat_manager.filterName(input_1.value);
+
+});
+
+input_2.addEventListener(`input`, (e) =>{
+    
+    const keresett_szam = Number(input_2.value);
+    adat_manager.filterAge(keresett_szam);
+});
