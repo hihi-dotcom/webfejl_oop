@@ -77,9 +77,36 @@ class Data_Manager{
             this.#updateCallback(result_names);//meghívtuk a privát tulajdonságunkat,(függvényként) amely tartalmazza a definiált callback függvényünket, és megadtuk neki a tömbünket, amely a jó objektumokat tartalmazza
         }
 
+        /**
+         * @param {function(Person):boolean} bemeneti_par 
+         */
+        filter(bemeneti_par){
+            const result_ages = [];//Definiáltam egy üres tömböt,amibe a függvényben történő vizsgálat utáni helyes értékeket teszem 
 
+            for(let i = 0; i < this.#array.length; i++){// végig iterálok a privát tömbünkön egy növekményes ciklussal
+                if(bemeneti_par(this.#array[i])){//Vizgálom, hogy a tömbünk aktuális elemének életkor tulajdonsága megegyezik-e a bemeneti paraméterrel
+                    result_ages.push(this.#array[i]); //ha megegyezik, a push segítségével belerakjuk a tömbünk atuális elemét a függvény első sorában létrehozott tömbbe
+                }
+            }
+            this.#updateCallback(result_ages);//meghívtuk a privát tulajdonságunkat,(függvényként) amely tartalmazza a definiált callback függvényünket, és megadtuk neki a tömbünket, amely a jó objektumokat tartalmazza
+        }
+
+        orderByName(){
+            const result_ = [];
+            for(const ember of this.#array){
+                result_.push(ember);
+            }
+            for(let i = 0; i < result_.length; i++){
+                for(let j = i + 1; j < result_.length; j++){
+                    if(result_[i].nev < result_[j].nev){
+                        const temp = result_[i];
+                        result_[i] = result_[j];
+                        result_[j] = temp;
+                    }
+                }
+            }
+        }
 }
-
 class Data_Table{//definiáltam a Data_Table osztályt
     /**
      * @type {HTMLTableSectionElement}
@@ -149,14 +176,47 @@ document.body.appendChild(input_2);// a második input elemet hozzáfűzzük a H
 
 
 
+
+
 input_1.addEventListener(`input`, (e) =>{//létrehozok az elsőként létrehozott input elemnek, egy addEventListenert, amely az input eseményre hallgat, ha bekövetkezik
  
-    adat_manager.filterName(input_1.value); //meghívjuk a Data_Manager osztályunk példányának a filterName függvényét, amelynek paraméterként átadom az első input értékét
+    adat_manager.filter(input_1.value); //meghívjuk a Data_Manager osztályunk példányának a filterName függvényét, amelynek paraméterként átadom az első input értékét
 
 });
 
 input_2.addEventListener(`input`, (e) =>{//létrehozok a másodiként létrehozott input elemnek, egy addEventListenert, amely az input eseményre hallgat, ha bekövetkezik
     
     const keresett_szam = Number(input_2.value);//egy változóban eltároljuk, a Number() függvény segítségével átkonvertált második input értékét
-    adat_manager.filterAge(keresett_szam);//meghívjuk a Data_Manager osztályunk példányának a filterName függvényét, amelynek paraméterként átadom a változót, amelyben a második input átkonvertált értékét tároltam
+    adat_manager.filter((pers) => {
+        return pers.eletkor === keresett_szam;
+    });//meghívjuk a Data_Manager osztályunk példányának a filterName függvényét, amelynek paraméterként átadom a változót, amelyben a második input átkonvertált értékét tároltam
 });
+
+const input_3 = document.createElement(`input`);
+
+document.body.appendChild(input_3);
+input_3.type = `file`;
+
+input_3.addEventListener(`change`, (e) => {
+   const our_file =  e.target.files[0];
+   const fileolvaso = new FileReader();
+   fileolvaso.readAsText(our_file);
+
+   fileolvaso.onload = (e) => {
+      const filecontent = fileolvaso.result;
+      console.log(filecontent);
+       const splitted_names = filecontent.split('\n');
+       console.log(splitted_names);
+
+       for(const ember of splitted_names){
+         const lespilttelt_tomb = ember.split(';');
+         const pers = {
+            nev: lespilttelt_tomb[0],
+            eletkor: Number(lespilttelt_tomb[1])
+         };
+         adat_manager.add(pers);
+       };
+       
+   };
+
+})
