@@ -84,28 +84,36 @@ class Data_Manager{
             const result_ages = [];//Definiáltam egy üres tömböt,amibe a függvényben történő vizsgálat utáni helyes értékeket teszem 
 
             for(let i = 0; i < this.#array.length; i++){// végig iterálok a privát tömbünkön egy növekményes ciklussal
-                if(bemeneti_par(this.#array[i])){//Vizgálom, hogy a tömbünk aktuális elemének életkor tulajdonsága megegyezik-e a bemeneti paraméterrel
+                if(bemeneti_par(this.#array[i])){//Vizsgálom, hogy a tömbünk aktuális elemének életkor tulajdonsága megegyezik-e a bemeneti paraméterrel
                     result_ages.push(this.#array[i]); //ha megegyezik, a push segítségével belerakjuk a tömbünk atuális elemét a függvény első sorában létrehozott tömbbe
                 }
             }
             this.#updateCallback(result_ages);//meghívtuk a privát tulajdonságunkat,(függvényként) amely tartalmazza a definiált callback függvényünket, és megadtuk neki a tömbünket, amely a jó objektumokat tartalmazza
         }
 
-        orderByName(){
-            const result_ = [];
-            for(const ember of this.#array){
-                result_.push(ember);
+        /**
+         * 
+         * @param {function (Person, Person):boolean} bemeneti_callback
+         * 
+         */
+        order(bemeneti_callback){
+            const result_ordering = [];
+            for(const people of this.#array){
+                result_ordering.push(people);
             }
-            for(let i = 0; i < result_.length; i++){
-                for(let j = i + 1; j < result_.length; j++){
-                    if(result_[i].nev < result_[j].nev){
-                        const temp = result_[i];
-                        result_[i] = result_[j];
-                        result_[j] = temp;
+            for(let i = 0; i < result_ordering.length; i++){
+                for(let j = i + 1; j < result_ordering.length; j++){
+                    if(bemeneti_callback(result_ordering[i], result_ordering[j])){
+                        const temp_2 = result_ordering[i];
+                        result_ordering[i] = result_ordering[j];
+                        result_ordering[j] = temp_2;
                     }
                 }
             }
+
+            this.#updateCallback(result_ordering);
         }
+
 }
 class Data_Table{//definiáltam a Data_Table osztályt
     /**
@@ -120,6 +128,26 @@ class Data_Table{//definiáltam a Data_Table osztályt
         const table = document.createElement(`table`); //Létrehoztam egy table HTMLElementet
         document.body.appendChild(table);//Hozzáfűztem a HTML oldalamhoz a table HTMLElementet
 
+        const thead = document.createElement(`thead`);
+        table.appendChild(thead);
+        const tr = document.createElement(`tr`);
+        thead.appendChild(tr);
+        const th_nev = document.createElement(`th`);
+        const th_eletkor = document.createElement(`th`);
+        tr.appendChild(th_nev);
+        tr.appendChild(th_eletkor);
+        th_nev.innerHTML = `Név`;
+        th_eletkor.innerHTML = `Életkor`;
+        th_nev.addEventListener(`click`, (e) => {
+            datamanager.order((person1, person2) => {
+                return person1.nev.localeCompare(person2.nev);
+            });
+        });
+        th_eletkor.addEventListener(`click`, (e) => {
+            datamanager.order((ember1, ember2) => {
+                return ember1.eletkor < ember2.eletkor;
+            });
+        })
         const tbody = document.createElement(`tbody`); //Létrehozok egy tbody HTMLElementet
         table.appendChild(tbody);//Hozzáfűzöm a most létrehozott tbody elemet a table HTMLElementhez
         this.#tbody = tbody;// a létrehozott tbody privát tulajdonságomnak értékül adom, a  most létrehozott tbody HTMLElementet
@@ -180,7 +208,9 @@ document.body.appendChild(input_2);// a második input elemet hozzáfűzzük a H
 
 input_1.addEventListener(`input`, (e) =>{//létrehozok az elsőként létrehozott input elemnek, egy addEventListenert, amely az input eseményre hallgat, ha bekövetkezik
  
-    adat_manager.filter(input_1.value); //meghívjuk a Data_Manager osztályunk példányának a filterName függvényét, amelynek paraméterként átadom az első input értékét
+    adat_manager.filter((pers) => {
+        return pers.nev.includes(input_1.value);
+    }); //meghívjuk a Data_Manager osztályunk példányának a filterName függvényét, amelynek paraméterként átadom az első input értékét
 
 });
 
