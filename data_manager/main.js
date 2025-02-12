@@ -46,37 +46,6 @@ class Data_Manager{
         this.#updateCallback(this.#array);//meghívtuk a privát tulajdonságunkat,(függvényként) amely tartalmazza a definiált callback függvényünket, és megadtuk neki a privát tömbünket
     }
 
-/**
- * 
- * @param {Number} bemeneti_eletkor 
- */
-    filterAge(bemeneti_eletkor){//definiáltam a filterAge függvényt, amelynek egy paramétere van a bemeneti_eletkor,(Number)
-        const result_ages = [];//Definiáltam egy üres tömböt,amibe a függvényben történő vizsgálat utáni helyes értékeket teszem 
-
-        for(let i = 0; i < this.#array.length; i++){// végig iterálok a privát tömbünkön egy növekményes ciklussal
-            if(this.#array[i].eletkor === bemeneti_eletkor){//Vizgálom, hogy a tömbünk aktuális elemének életkor tulajdonsága megegyezik-e a bemeneti paraméterrel
-                result_ages.push(this.#array[i]); //ha megegyezik, a push segítségével belerakjuk a tömbünk atuális elemét a függvény első sorában létrehozott tömbbe
-            }
-        }
-        this.#updateCallback(result_ages);//meghívtuk a privát tulajdonságunkat,(függvényként) amely tartalmazza a definiált callback függvényünket, és megadtuk neki a tömbünket, amely a jó objektumokat tartalmazza
-    }
-
-    /**
-     * 
-     * @param {String} bemeneti_nev 
-    */
-        filterName(bemeneti_nev){//Létrehoztam a filterName függvényt, amelynek egy bemeneti paramétere van(String)
-            const result_names = [];//Ismét létrehoztam egy tömböt, amelybe majd a cikluson belül történő vizsgálat helyes eredményei kerülnek bele
-                for(let i = 0; i < this.#array.length; i++){//végig iterálok a tömb tulajdonságunkon egy növekményes ciklus segítségével
-                    if(this.#array[i].nev.includes(bemeneti_nev)){// az elágazásban vizsgáljuk, hogy a tömbünk aktuális elemének nev tulajdonsága tartalmazza e a bemeneti paraméterünk valamely karakterét, vagy az egészét a String.includes függvény segítségével
-                        result_names.push(this.#array[i]); //ha igen akkor a tömbünk aktuális elemét a push segítségével belerakjuk a filterName függvény első sorában létrehozott result_names tömbünkbe
-                    }
-           
-                }
-        
-            this.#updateCallback(result_names);//meghívtuk a privát tulajdonságunkat,(függvényként) amely tartalmazza a definiált callback függvényünket, és megadtuk neki a tömbünket, amely a jó objektumokat tartalmazza
-        }
-
         /**
          * @param {function(Person):boolean} bemeneti_par 
          */
@@ -84,8 +53,8 @@ class Data_Manager{
             const result_ages = [];//Definiáltam egy üres tömböt,amibe a függvényben történő vizsgálat utáni helyes értékeket teszem 
 
             for(let i = 0; i < this.#array.length; i++){// végig iterálok a privát tömbünkön egy növekményes ciklussal
-                if(bemeneti_par(this.#array[i])){//Vizsgálom, hogy a tömbünk aktuális elemének életkor tulajdonsága megegyezik-e a bemeneti paraméterrel
-                    result_ages.push(this.#array[i]); //ha megegyezik, a push segítségével belerakjuk a tömbünk atuális elemét a függvény első sorában létrehozott tömbbe
+                if(bemeneti_par(this.#array[i])){//meghívom a bemeneti paraméter callback függvényemet, a privát tömböm egy elemével
+                    result_ages.push(this.#array[i]); //ha az elágazás igaz,akkor a push segítségével belerakjuk a tömbünk atuális elemét a függvény első sorában létrehozott tömbbe
                 }
             }
             this.#updateCallback(result_ages);//meghívtuk a privát tulajdonságunkat,(függvényként) amely tartalmazza a definiált callback függvényünket, és megadtuk neki a tömbünket, amely a jó objektumokat tartalmazza
@@ -96,22 +65,22 @@ class Data_Manager{
          * @param {function (Person, Person):boolean} bemeneti_callback
          * 
          */
-        order(bemeneti_callback){
-            const result_ordering = [];
-            for(const people of this.#array){
-                result_ordering.push(people);
+        order(bemeneti_callback){//definiáltam egy order függvényt, amelynek egy paramétere van egy függvény, ami callback típusú függvény, aminek kettő Person típusú paramétere van és egy boolean műveletet végez 
+            const result_ordering = [];//egy tömböt deklarálok, amit a result_ordering változóba teszek
+            for(const people of this.#array){//egy for of ciklussal bejártuk a privát tömbünket
+                result_ordering.push(people);// a korábban deklarált tömbbe beleteszem a privát tömböm egyes elemeit(feltöltöm értékekkel)
             }
-            for(let i = 0; i < result_ordering.length; i++){
-                for(let j = i + 1; j < result_ordering.length; j++){
-                    if(bemeneti_callback(result_ordering[i], result_ordering[j])){
-                        const temp_2 = result_ordering[i];
-                        result_ordering[i] = result_ordering[j];
-                        result_ordering[j] = temp_2;
+            for(let i = 0; i < result_ordering.length; i++){//végigiterálok a függvény első sorában létrehozott tömbön egy növekményes ciklussal
+                for(let j = i + 1; j < result_ordering.length; j++){//végigiterálok, a tömbön egy növekményes ciklussal csak az i+1. elem említésével
+                    if(bemeneti_callback(result_ordering[i], result_ordering[j])){//az elágazásban meghívom, a paraméterben megadott callback függvényt, a tömböm i-edik és i+1-dik elemével
+                        const temp_2 = result_ordering[i];//a temp_2 változónak megadom a tömböm i-edik elemét
+                        result_ordering[i] = result_ordering[j];//a tömböm i-edik elemének értékül adom a tömböm j. elemét
+                        result_ordering[j] = temp_2;//a tömböm j-edik elemének megadom értékül a temp_2 tulajdonságot
                     }
                 }
             }
 
-            this.#updateCallback(result_ordering);
+            this.#updateCallback(result_ordering);//meghívtuk ismét az updateCallback privát tulajdonságunkat függvényként, és átadtuk neki paraméterként a függvényben használt tömbünket
         }
 
 }
@@ -128,23 +97,23 @@ class Data_Table{//definiáltam a Data_Table osztályt
         const table = document.createElement(`table`); //Létrehoztam egy table HTMLElementet
         document.body.appendChild(table);//Hozzáfűztem a HTML oldalamhoz a table HTMLElementet
 
-        const thead = document.createElement(`thead`);
-        table.appendChild(thead);
-        const tr = document.createElement(`tr`);
-        thead.appendChild(tr);
-        const th_nev = document.createElement(`th`);
-        const th_eletkor = document.createElement(`th`);
-        tr.appendChild(th_nev);
-        tr.appendChild(th_eletkor);
-        th_nev.innerHTML = `Név`;
-        th_eletkor.innerHTML = `Életkor`;
-        th_nev.addEventListener(`click`, (e) => {
-            datamanager.order((person1, person2) => {
+        const thead = document.createElement(`thead`);//deklaráltam egy thead elemet(HTMLTableSection)
+        table.appendChild(thead);//hozzáfűztem a táblázatomhoz
+        const tr = document.createElement(`tr`);//létrehoztam egy tr elemet(HTMLElement)
+        thead.appendChild(tr);//hozzáfűztem a korábban létrehozott thead elemhez a tr-t
+        const th_nev = document.createElement(`th`);//deklaráltam egy th cella elemet(HTMLElement) a névnek
+        const th_eletkor = document.createElement(`th`);//deklaráltam egy th cella elemet az életkornak(HTMLElement)
+        tr.appendChild(th_nev);//hozzáfűztem a tr sorhoz, a névnek létrehozott th cella elemet
+        tr.appendChild(th_eletkor);//hozzáfűztem a sorhoz, az életkornak létrehozott th cella elemet is 
+        th_nev.innerHTML = `Név`;//a névnek létrehozott th elem innerHTML tulajdonságának megadtam egy stringet
+        th_eletkor.innerHTML = `Életkor`;// az életkornak létrehozott th elem innerHTMl tulajdonságának megadtam egy stringet megint
+        th_nev.addEventListener(`click`, (e) => {//a th_nev-nek meghívtam az addeventListenerjét a click eseményre, az addeventlistenerben,lévő kódrészlet csak akkor fut le, ha a click esemény megvalósul
+            datamanager.order((person1, person2) => {//meghívom a Data_Manager osztály order függvényét, amelynek a bemeneti paramétere is egy függvény(callback/arrow function), a callback függvénynek 2 paramétere van(2 person típusú), ez a callback függvény, visszatér a két paraméter(Person típusú objektum) név tulajdonságának(String) vizsgálatának eredményével 
                 return person1.nev.localeCompare(person2.nev);
             });
         });
-        th_eletkor.addEventListener(`click`, (e) => {
-            datamanager.order((ember1, ember2) => {
+        th_eletkor.addEventListener(`click`, (e) => {// a th_eletkornak is meghívtam az addeventListenerjét a click eseményre, itt is csak akkor fut le az addeventlistener-en belüli kódrészlet, ha a click esemény megtörténik
+            datamanager.order((ember1, ember2) => {//ismét meghívom a Data_Manager osztályunk order függvényét, amelynek még mindig a paramétere egy callback (függvény/arrow function) amelynek van 2 paramétere és ebben az esetben,visszatérünk a két bemeneti paraméter(Person típusú objektumok) eletkor tulajdonságának vizsgálatának eredményével
                 return ember1.eletkor < ember2.eletkor;
             });
         })
@@ -208,18 +177,18 @@ document.body.appendChild(input_2);// a második input elemet hozzáfűzzük a H
 
 input_1.addEventListener(`input`, (e) =>{//létrehozok az elsőként létrehozott input elemnek, egy addEventListenert, amely az input eseményre hallgat, ha bekövetkezik
  
-    adat_manager.filter((pers) => {
+    adat_manager.filter((pers) => {//meghívom az adat_manager példányunk általános filter függvényét, amelynek a bemeneti paramétere is egy függvény(callback) és az arrow functionben(átadott paraméter) vizsgálom, hogy a callbackben paraméterként átadott Person típusú objektum név tulajdonságának és az input_1 értékének összevetésével, annak eredményével térünk vissza
         return pers.nev.includes(input_1.value);
-    }); //meghívjuk a Data_Manager osztályunk példányának a filterName függvényét, amelynek paraméterként átadom az első input értékét
+    }); 
 
 });
 
 input_2.addEventListener(`input`, (e) =>{//létrehozok a másodiként létrehozott input elemnek, egy addEventListenert, amely az input eseményre hallgat, ha bekövetkezik
     
     const keresett_szam = Number(input_2.value);//egy változóban eltároljuk, a Number() függvény segítségével átkonvertált második input értékét
-    adat_manager.filter((pers) => {
+    adat_manager.filter((pers) => {//ismét meghívjuk az általános filter függvényt,amelynek a paramétere ismét függvény(callback), és callback függvényünk is vár ugye egy paramétert, ami egy Person típusú tömb, és ennek egy objektumának az eletkor tulajdonságát vizsgáljuk,hogy megegyezik-e a keresett_számunkkal, és visszatérünk ennek a vizsgálatnak az eredményével 
         return pers.eletkor === keresett_szam;
-    });//meghívjuk a Data_Manager osztályunk példányának a filterName függvényét, amelynek paraméterként átadom a változót, amelyben a második input átkonvertált értékét tároltam
+    });
 });
 
 const input_3 = document.createElement(`input`);
