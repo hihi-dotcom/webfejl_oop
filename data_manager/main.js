@@ -191,29 +191,29 @@ input_2.addEventListener(`input`, (e) =>{//létrehozok a másodiként létrehozo
     });
 });
 
-const input_3 = document.createElement(`input`);
+const input_3 = document.createElement(`input`);//létrehozok még egy inputot(HTMLELement)
 
-document.body.appendChild(input_3);
-input_3.type = `file`;
+document.body.appendChild(input_3);//Hozzáfűzöm a HTMl fájlomhoz a most létrehozott inputot
+input_3.type = `file`;//beállítom az input típusát(file)
 
-input_3.addEventListener(`change`, (e) => {
-   const our_file =  e.target.files[0];
-   const fileolvaso = new FileReader();
-   fileolvaso.readAsText(our_file);
+input_3.addEventListener(`change`, (e) => {//meghívom a most létrehozott input_3 addeventListenerjét a change eventre
+   const our_file =  e.target.files[0];//eltárolom egy változóban az eventtarget propertyt, amelyben az inputra utalunk, amelybe a fájlunkat betöltöttük, és elkértük a files nevű tömb első elemét
+   const fileolvaso = new FileReader();//példányosítom a beépített FileReader osztályt(eltárolom a fileolvaso változóban)
+   fileolvaso.readAsText(our_file);//A FileReader osztályunk példányának meghívtuk a readAsText függvényét, amelynek paraméterként megadtuk, az elkért files tömbünk első elemét(eventtargettel) tartalmazó változót
 
-   fileolvaso.onload = (e) => {
-      const filecontent = fileolvaso.result;
-      console.log(filecontent);
-       const splitted_names = filecontent.split('\n');
-       console.log(splitted_names);
+   fileolvaso.onload = (e) => {//a fileReader példányunknak meghívtuk az onload eseménykezelőjét
+      const filecontent = fileolvaso.result;//eltároljuk a fájl tartalmát egy változóban
+      console.log(filecontent);//kilogoljuk a fájl tartalmát
+       const splitted_names = filecontent.split('\n');//a fájl tartalmát splitteljük/elválasztjuk \n segítségével, ami új sort jelent
+       console.log(splitted_names);//kilogoljuk az elválasztott elemeket
 
-       for(const ember of splitted_names){
-         const lespilttelt_tomb = ember.split(';');
-         const pers = {
-            nev: lespilttelt_tomb[0],
-            eletkor: Number(lespilttelt_tomb[1])
+       for(const ember of splitted_names){//végig iterálok az elálaszott sorokat tartalmazó tömbön
+         const lespilttelt_tomb = ember.split(';');//minden elemet splitelünk/ elválasztunk a ;-k szerint, és eltároljuk egy változóba
+         const pers = {// az újonnan keletkezett tömb(lespilttelt_tomb) első elemének a nev tulajdonsága
+            nev: lespilttelt_tomb[0],// a tömb első elem
+            eletkor: Number(lespilttelt_tomb[1])// az eletkor tulajdonsága a Number() konstruktor és explicit konverzió segítségével az új tömbünk második eleme
          };
-         adat_manager.add(pers);
+         adat_manager.add(pers);//ismét meghívtuk a Data_manager osztályunk add függvényét és hozzáadtuk a létrehozott pers objektumot
        };
        
    };
