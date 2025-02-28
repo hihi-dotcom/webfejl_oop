@@ -41,3 +41,7 @@ console.log(fv4(5, 7));
 const fv2_back = fv2(5, 7, fv3('+'));
 
 console.log(fv2_back);
+
+const fv2_backtoback = fv2(5, 7, fv3("*2"));
+
+console.log(fv2_backtoback);
