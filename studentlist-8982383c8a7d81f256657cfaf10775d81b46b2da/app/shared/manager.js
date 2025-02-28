@@ -17,10 +17,19 @@ class Manager{
 
     add(student){
         this.#array.push(student);
-        this.#addCallback(student);
+        
     }
 
     select(student){
         this.#selectCallback(student);
+    }
+
+    /**
+     * Végigiterál a tömbön és meghívja az addCallbacket
+     */
+    render(){
+        for(const student of this.#array){
+            this.#addCallback(student);
+        }
     }
 }
