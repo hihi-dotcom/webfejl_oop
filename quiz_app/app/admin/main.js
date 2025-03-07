@@ -6,3 +6,6 @@ const formFields = [
     { id: 'answer4', label: 'valasz4' },
     { id: 'rightAnswer', label: 'helyes valasz' },
   ];
+
+  const manager = new Manager();
+  const formcontr = new FormController(manager, formFields);
