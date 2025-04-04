@@ -57,3 +57,7 @@ const thisFunction = () => {//a thisFunction változónak értékül adunk egy n
     return result_5 //visszatérünk, a result_5 változónkkal
 };
 console.log(thisFunction()); //kilogoljuk a thisFunctiont, eredmény: 62
+
+
+const select = document.createElement(`select`);
+

@@ -108,7 +108,7 @@ const Gomszab = {
      * 
      * Csinál egy cellát a megadott tartalommal és hozzáfűzi a megadott ttáblázatsorhoz
      * 
-     * @param {HTMLTableCellElement} tableRow a táblázat sora, amihez fűzzük az elemet
+     * @param {HTMLTableRowElement} tableRow a táblázat sora, amihez fűzzük az elemet
      * @param {string} content a cella tartalma
      */
     makeCellToRow: (tableRow, content) => {

@@ -1,3 +1,8 @@
+/**
+ * @callback AddCallback lefut egy elem hozzaadasanal
+ * @param {Question} question a hozzaadott elem
+ */
+
 class Manager{
     #array;
 
@@ -11,10 +16,17 @@ class Manager{
 
     #finishCallback;
 
+    /**
+     * @type {AddCallback}
+     */
+    #addCallback;
+
     constructor(array = []){
         this.#array = array;
         this.#currentQuestionNumber = 0;
         this.#selectedAnswer={};
+        this.#addCallback = () => {//azért, mert nem mindig adunk neki értéket.
+        };
     }
 
     setNextQuestionCallback(callback){
@@ -29,10 +41,29 @@ class Manager{
         this.#finishCallback = callback;
     }
 
+    /**
+     * Beállítja a callbackünket
+     * @param {AddCallback} callback 
+     */
+    setAddCallback(callback){
+        this.#addCallback = callback;
+    }
     add(question){
         this.#array.push(question);
+        this.#addCallback(question);
     }
-
+    /**
+     * @returns {string} file tartalma
+     */
+    generateTextForExport(){
+        const result = [];
+        for(const question of this.#array){
+            const line = `${question.questionText}; ${question.answers.join(';')}; ${question.rightAnswer}`;
+            result.push(line); 
+        }
+        console.log(result);
+        return result.join('\n');
+    }
     nextQuestion(answer){
         this.#selectedAnswer[this.#currentQuestionNumber] = answer;
         this.#currentQuestionNumber++;

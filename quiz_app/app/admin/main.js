@@ -8,4 +8,35 @@ const formFields = [
   ];
 
   const manager = new Manager();
+  const tablazat = new Table(manager);
   const formcontr = new FormController(manager, formFields);
+  Gomszab.addFileUploader(fileResultString => {
+    const fileLines = fileResultString.split('\n');
+    for(const line of fileLines){
+      const fields = line.split(';');
+      const answers = [
+        fields[1],
+        fields[2],
+        fields[3],
+        fields[4]
+      ]
+      const rightAnswer = fields[5].trim();
+      const question = new Question(fields[0], answers, rightAnswer);
+      manager.add(question)
+    }
+  });
+  const exportButton = document.createElement('button');
+  exportButton.textContent = 'Export';
+  document.body.appendChild(exportButton);
+  exportButton.addEventListener('click', (e)=> {
+    const link = document.createElement('a');
+ 
+
+    const content = manager.generateTextForExport();
+    const file = new Blob([content]);
+    link.href = URL.createObjectURL(file);
+    link.download = 'newdata.csv';
+    link.click();
+    URL.revokeObjectURL(link.href);
+  });
+  

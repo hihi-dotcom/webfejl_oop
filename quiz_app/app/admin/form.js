@@ -33,8 +33,16 @@ class FormController{
         form.addEventListener('submit', (e) => {
             e.preventDefault();
            if(this.#validateAllFields()){
-            const value = this.#getValueObject();
-            console.log(value);
+                const value = this.#getValueObject();
+                const answers = [
+                    value.answer1,
+                    value.answer2,
+                    value.answer3,
+                    value.answer4
+                ];
+                const question = new Question(value.questionText,answers, value.rightAnswer);
+                this.#manager.add(question);
+                e.target.reset();
            }
             //ha valid a formfieldek értéke alapján létrehozzuk a questiont
             //hozzaadjuk a managerhez, majd reseteljuk
@@ -60,14 +68,18 @@ class FormController{
     };
 
     /**
-     * 
-     * @returns 
+     * Visszatér a fieldek értékeivel és idjaival
+     * @returns {{questionText: string,answer1: string,answer2: string,answer3: string,answer4: string,rightAnswer: string}}
      */
     #getValueObject(){
+        let type = '{';
         const result = {};
         for(const field of this.#formfieldArray){
             result[field.id] = field.value;
+            type += `${field.id}: ${typeof field.value},`;
         }
+        type += '}';
+        console.log(type);
         return result;
     }
 };
@@ -130,6 +142,7 @@ class FormField{
      * @returns {HTMLDivElement}
      */
     getFormField(){
+        
         const div = Gomszab.makeDiv([this.#label, this.#input, this.#errorfield]);
         return div;
     }

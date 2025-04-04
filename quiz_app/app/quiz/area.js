@@ -44,7 +44,7 @@ class AnswersArea extends Area{
     constructor(cssClass, manager){
         super(cssClass, manager)
 
-        this.manager.setNextAnswersCallback(this. #getNextAnswerCallback())
+        this.manager.setNextAnswersCallback(this.#getNextAnswerCallback())
     }
 
     #getNextAnswerCallback(){
